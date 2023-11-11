@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeUploader</title>
+    <link rel="stylesheet" href="{% static 'myapp/css/bootstrap.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+
+</head>
+<body>
+    <div class="container mb-5">
+        <h1 class="alrt-danger text-center p-3">Resume Uploader</h1>
+        <div class="row">
+            <div class="col-sm-8">
+                {% if messages %}
+                {% for message in messages %}
+                <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                <form action="" method="post" enctype="multipart/form-data" class="shadow p-5" novalidate>
+                    {% csrf_token %}
+                    {% for i in form %}
+                    <div class="form-group mb-3">
+                        {{i.label_tag}}{{i}} <small class="text-danger">{{i.errors|striptags}}</small>
+                    </div>
+                    {% endfor %}
+                    <input type="submit" value="submit" class="btn btn-primary">
+
+
+                </form>
+            </div>
+            <dic class="col-sm-4">
+                <h4><u>List of condidate</u></h4>
+                {% for candidate in candidates %}
+                {{candidate.id}}: <a href="{% url 'candidate' candidate.id %}">{{candidate.name}}</a>
+                <hr>
+                {% endfor %}
+            </dic>
+        </div>
+
+    </div>
+    
+</body>
+</html>
